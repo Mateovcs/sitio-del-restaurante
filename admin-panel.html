@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Restaurante Delicias</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container {
+            padding: 80px 0;
+            color: white;
+            min-height: 100vh;
+            background: #000202;
+        }
+        .admin-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .admin-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            padding: 12px 25px;
+            background: #0d0d0d;
+            border: 2px solid #333;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nav-btn.active,
+        .nav-btn:hover {
+            border-color: #db241b;
+            background: #db241b;
+        }
+        .admin-section {
+            display: none;
+            background: #0d0d0d;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            margin-bottom: 30px;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+        }
+        .form-input:focus {
+            border-color: #db241b;
+            outline: none;
+        }
+        .btn-primary {
+            background: #db241b;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background: #c41f17;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .product-card {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        .product-card h4 {
+            color: #db241b;
+            margin-bottom: 10px;
+        }
+        .product-card p {
+            color: #A7A7A7;
+            margin-bottom: 10px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-edit {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .message {
+            padding: 15px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .message.error {
+            background: #dc3545;
+        }
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container container">
+        <button class="logout-btn" onclick="window.location.href='index.html'">🏠 Volver al Sitio</button>
+        
+        <div class="admin-header">
+            <h1>🛠️ Panel de Administración</h1>
+            <p style="color: #A7A7A7;">Gestiona los productos de tu restaurante</p>
+        </div>
+
+        <!-- Navegación -->
+        <div class="admin-nav">
+            <button class="nav-btn active" onclick="showSection('products')">📦 Productos</button>
+            <button class="nav-btn" onclick="showSection('orders')">📋 Pedidos</button>
+            <button class="nav-btn" onclick="showSection('categories')">📁 Categorías</button>
+            <button class="nav-btn" onclick="showSection('settings')">⚙️ Configuración</button>
+        </div>
+
+        <!-- Mensaje de éxito -->
+        <div class="message" id="successMessage">¡Operación realizada con éxito!</div>
+
+        <!-- SECCIÓN PRODUCTOS -->
+        <div id="products" class="admin-section active">
+            <h2>Gestión de Productos</h2>
+            
+            <!-- Formulario para agregar producto -->
+            <form id="productForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="productName">Nombre del Producto:</label>
+                        <input type="text" id="productName" class="form-input" placeholder="Ej: Hamburguesa Especial" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productPrice">Precio:</label>
+                        <input type="number" id="productPrice" class="form-input" step="0.01" placeholder="Ej: 95.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="productCategory">Categoría:</label>
+                        <select id="productCategory" class="form-input" required>
+                            <option value="">Seleccionar categoría</option>
+                            <option value="hamburguesas">Hamburguesas</option>
+                            <option value="burritos">Burritos</option>
+                            <option value="postres">Postres</option>
+                            <option value="bebidas">Bebidas</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productStatus">Estado:</label>
+                        <select id="productStatus" class="form-input" required>
+                            <option value="active">🟢 Activo</option>
+                            <option value="inactive">🔴 Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="productDescription">Descripción:</label>
+                    <textarea id="productDescription" class="form-input" rows="4" placeholder="Describe el producto..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-primary">➕ Agregar Producto</button>
+            </form>
+
+            <!-- Lista de productos existentes -->
+            <h3 style="margin-top: 50px; color: white;">Productos Existentes</h3>
+            <div id="productsList" class="products-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+
+        <!-- Otras secciones (simplificadas por ahora) -->
+        <div id="categories" class="admin-section">
+            <h2>Gestión de Categorías</h2>
+            <p style="color: #A7A7A7;">Próximamente...</p>
+        </div>
+
+       <div id="orders" class="admin-section">
+    <h2>📋 Gestión de Pedidos</h2>
+
+    <!-- Estadísticas rápidas -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+        <div class="product-card" style="text-align: center;">
+            <h3 id="totalOrders">0</h3>
+            <p>Total de Pedidos</p>
+        </div>
+        <div class="product-card" style="text-align: center;">
+            <h3 id="activeOrders">0</h3>
+            <p>Pedidos Activos</p>
+        </div>
+        <div class="product-card" style="text-align: center;">
+            <h3 id="totalRevenue">$0.00</h3>
+            <p>Ingresos Totales</p>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div style="margin-bottom: 20px;">
+        <label style="color: white; margin-right: 10px;">Filtrar por estado:</label>
+        <select id="statusFilter" onchange="loadOrders()" style="padding: 8px; background: #1a1a1a; color: white; border: 1px solid #333; border-radius: 5px;">
+            <option value="">Todos los pedidos</option>
+            <option value="pendiente">⏳ Pendiente</option>
+            <option value="preparando">👨‍🍳 Preparando</option>
+            <option value="listo">✅ Listo</option>
+            <option value="entregado">🚚 Entregado</option>
+            <option value="cancelado">❌ Cancelado</option>
+        </select>
+    </div>
+
+    <div id="ordersList">
+        <!-- Los pedidos se cargarán aquí -->
+    </div>
+</div>
+
+        <div id="settings" class="admin-section">
+            <h2>Configuración del Restaurante</h2>
+            <p style="color: #A7A7A7;">Próximamente...</p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = '/api';
+
+        // Cargar productos desde la API
+        async function loadProducts() {
+            try {
+                console.log('📦 Cargando productos...');
+                const response = await fetch(`${API_URL}/admin/products`);
+                const products = await response.json();
+                const productsList = document.getElementById('productsList');
+                
+                productsList.innerHTML = '';
+                
+                if (products.length === 0) {
+                    productsList.innerHTML = '<p style="color: #A7A7A7; text-align: center; grid-column: 1/-1;">No hay productos agregados aún.</p>';
+                    return;
+                }
+                
+                products.forEach((product) => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <h4>${product.name}</h4>
+                        <p><strong>Precio:</strong> $${product.price}</p>
+                        <p><strong>Categoría:</strong> ${product.category}</p>
+                        <p><strong>Estado:</strong> ${product.status === 'active' ? '🟢 Activo' : '🔴 Inactivo'}</p>
+                        <p>${product.description}</p>
+                        <div class="product-actions">
+                            <button class="btn-edit" onclick="editProduct(${product.id})">✏️ Editar</button>
+                            <button class="btn-delete" onclick="deleteProduct(${product.id})">🗑️ Eliminar</button>
+                        </div>
+                    `;
+                    productsList.appendChild(productCard);
+                });
+                
+                console.log(`✅ ${products.length} productos cargados`);
+            } catch (error) {
+                console.error('❌ Error cargando productos:', error);
+                showMessage('❌ Error al cargar productos', 'error');
+            }
+        }
+
+        // Agregar nuevo producto
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const productData = {
+                name: document.getElementById('productName').value,
+                price: document.getElementById('productPrice').value,
+                category: document.getElementById('productCategory').value,
+                status: document.getElementById('productStatus').value,
+                description: document.getElementById('productDescription').value
+            };
+            
+            console.log('➕ Agregando producto:', productData);
+            
+            try {
+                const response = await fetch(`${API_URL}/admin/products`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(productData)
+                });
+                
+                if (response.ok) {
+                    // Limpiar formulario
+                    this.reset();
+                    // Recargar lista
+                    await loadProducts();
+                    // Mostrar mensaje
+                    showMessage('✅ Producto agregado correctamente');
+                } else {
+                    const error = await response.json();
+                    showMessage(`❌ Error: ${error.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                showMessage('❌ Error al agregar producto', 'error');
+            }
+        });
+
+        // Eliminar producto
+        async function deleteProduct(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                console.log(`🗑️ Eliminando producto ID: ${id}`);
+                
+                try {
+                    const response = await fetch(`${API_URL}/admin/products/${id}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        await loadProducts();
+                        showMessage('🗑️ Producto eliminado correctamente');
+                    } else {
+                        const error = await response.json();
+                        showMessage(`❌ Error: ${error.error}`, 'error');
+                    }
+                } catch (error) {
+                    console.error('❌ Error:', error);
+                    showMessage('❌ Error al eliminar producto', 'error');
+                }
+            }
+        }
+        // Cargar pedidos desde la API real
+        async function loadOrders() {
+            try {
+                console.log('📋 Cargando pedidos...');
+
+                // Obtener filtro de estado
+                const statusFilter = document.getElementById('statusFilter').value;
+                let url = `${API_URL}/pedidos`;
+
+                if (statusFilter) {
+                    url = `${API_URL}/pedidos/estado/${statusFilter}`;
+                }
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!data.success) {
+                    console.error('❌ Error en respuesta:', data);
+                    showMessage('❌ Error al cargar pedidos', 'error');
+                    return;
+                }
+
+                const pedidos = data.pedidos;
+                const ordersList = document.getElementById('ordersList');
+
+                ordersList.innerHTML = '';
+
+                if (pedidos.length === 0) {
+                    ordersList.innerHTML = '<p style="color: #A7A7A7; text-align: center;">No hay pedidos aún.</p>';
+                    updateStats(0, 0, 0);
+                    return;
+                }
+
+                // Calcular estadísticas
+                const totalPedidos = pedidos.length;
+                const pedidosActivos = pedidos.filter(p => ['pendiente', 'preparando', 'listo'].includes(p.estado)).length;
+                const totalIngresos = pedidos.reduce((sum, p) => sum + parseFloat(p.total || 0), 0);
+
+                updateStats(totalPedidos, pedidosActivos, totalIngresos);
+
+                pedidos.forEach((pedido) => {
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'product-card';
+                    orderCard.style.marginBottom = '20px';
+
+                    // Colores según estado
+                    let statusColor = '#ffc107'; // amarillo por defecto
+                    let statusEmoji = '⏳';
+                    switch (pedido.estado) {
+                        case 'pendiente': statusColor = '#ffc107'; statusEmoji = '⏳'; break;
+                        case 'preparando': statusColor = '#17a2b8'; statusEmoji = '👨‍🍳'; break;
+                        case 'listo': statusColor = '#28a745'; statusEmoji = '✅'; break;
+                        case 'entregado': statusColor = '#6f42c1'; statusEmoji = '🚚'; break;
+                        case 'cancelado': statusColor = '#dc3545'; statusEmoji = '❌'; break;
+                    }
+
+                    orderCard.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <h4>Pedido #${pedido.id_pedido}</h4>
+                                <p><strong>Cliente:</strong> ${pedido.cliente ? pedido.cliente.nombre + ' ' + pedido.cliente.apellido : 'Cliente no encontrado'}</p>
+                                <p><strong>Mesa:</strong> ${pedido.mesa ? pedido.mesa.numero_mesa : 'N/A'}</p>
+                                <p><strong>Empleado:</strong> ${pedido.empleado ? pedido.empleado.nombre + ' ' + pedido.empleado.apellido : 'N/A'}</p>
+                                <p><strong>Tipo:</strong> ${pedido.tipo || 'N/A'}</p>
+                                <p><strong>Observaciones:</strong> ${pedido.observaciones || 'Sin observaciones'}</p>
+                                <p><strong>Total:</strong> $${parseFloat(pedido.total || 0).toFixed(2)}</p>
+                                <p><strong>Fecha:</strong> ${new Date(pedido.fecha_hora).toLocaleString()}</p>
+                            </div>
+                            <div style="text-align: right; margin-left: 20px;">
+                                <div style="margin-bottom: 10px;">
+                                    <span style="background: ${statusColor}; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">
+                                        ${statusEmoji} ${pedido.estado}
+                                    </span>
+                                </div>
+                                <div class="product-actions">
+                                    <select onchange="changeOrderStatus(${pedido.id_pedido}, this.value)" style="padding: 5px; background: #1a1a1a; color: white; border: 1px solid #333; border-radius: 5px; font-size: 12px;">
+                                        <option value="">Cambiar estado</option>
+                                        <option value="pendiente">⏳ Pendiente</option>
+                                        <option value="preparando">👨‍🍳 Preparando</option>
+                                        <option value="listo">✅ Listo</option>
+                                        <option value="entregado">🚚 Entregado</option>
+                                        <option value="cancelado">❌ Cancelado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    ordersList.appendChild(orderCard);
+                });
+
+                console.log(`✅ ${pedidos.length} pedidos cargados`);
+            } catch (error) {
+                console.error('❌ Error cargando pedidos:', error);
+                showMessage('❌ Error al cargar pedidos', 'error');
+            }
+        }
+
+        // Actualizar estadísticas
+        function updateStats(total, activos, ingresos) {
+            document.getElementById('totalOrders').textContent = total;
+            document.getElementById('activeOrders').textContent = activos;
+            document.getElementById('totalRevenue').textContent = `$${ingresos.toFixed(2)}`;
+        }
+
+        // Cambiar estado de pedido
+        async function changeOrderStatus(pedidoId, nuevoEstado) {
+            if (!nuevoEstado) return;
+
+            try {
+                console.log(`📝 Cambiando estado del pedido ${pedidoId} a: ${nuevoEstado}`);
+
+                const response = await fetch(`${API_URL}/pedidos/${pedidoId}/estado`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ estado: nuevoEstado })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage(`✅ Estado del pedido actualizado a: ${nuevoEstado}`);
+                    await loadOrders(); // Recargar lista
+                } else {
+                    showMessage(`❌ Error: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                console.error('❌ Error cambiando estado:', error);
+                showMessage('❌ Error al cambiar estado del pedido', 'error');
+            }
+        }
+
+// Y en la función showSection, agrega esto para cargar pedidos cuando se muestre la sección
+function showSection(sectionId) {
+    // ... código existente ...
+    
+    if (sectionId === 'orders') {
+        loadOrders();
+    }
+}
+
+        // Editar producto (simplificado)
+        function editProduct(id) {
+            alert(`✏️ Editar producto ID: ${id}\n\nEsta función estará disponible en la próxima actualización. Por ahora, puedes eliminar y volver a crear el producto.`);
+        }
+
+        // Mostrar sección
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remover active de todos los botones
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Activar botón correspondiente
+            event.target.classList.add('active');
+        }
+
+        // Mostrar mensaje
+        function showMessage(message, type = 'success') {
+            const messageEl = document.getElementById('successMessage');
+            messageEl.textContent = message;
+            messageEl.style.display = 'block';
+            messageEl.className = type === 'success' ? 'message' : 'message error';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 3000);
+        }
+
+        // Cargar productos al iniciar
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 Admin Panel iniciado');
+            await loadProducts();
+        });
+    </script>
+</body>
+</html>

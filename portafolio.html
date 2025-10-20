@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio - Restaurante Delicias</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .portfolio-container {
+            padding: 100px 0;
+            color: white;
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .portfolio-card {
+            background: #0d0d0d;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: #db241b;
+        }
+        .portfolio-img {
+            width: 100%;
+            height: 250px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+        .portfolio-content {
+            padding: 25px;
+        }
+        .portfolio-content h3 {
+            color: #db241b;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .portfolio-content p {
+            color: #A7A7A7;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .portfolio-price {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .portfolio-categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .category-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #db241b;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .category-btn.active,
+        .category-btn:hover {
+            background: #db241b;
+        }
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-container container">
+        <h1 style="text-align: center; font-size: 50px; margin-bottom: 20px;">Nuestro Portafolio</h1>
+        <p style="text-align: center; color: #A7A7A7; font-size: 18px; margin-bottom: 50px;">
+            Descubre nuestra exquisita selección de platillos
+        </p>
+        
+        <!-- Categorías -->
+        <div class="portfolio-categories">
+            <button class="category-btn active" data-category="all">Todos</button>
+            <button class="category-btn" data-category="hamburguesas">Hamburguesas</button>
+            <button class="category-btn" data-category="burritos">Burritos</button>
+            <button class="category-btn" data-category="postres">Postres</button>
+            <button class="category-btn" data-category="bebidas">Bebidas</button>
+        </div>
+
+        <!-- Grid de Productos -->
+        <div class="portfolio-grid">
+            <!-- Hamburguesa 1 -->
+            <div class="portfolio-card" data-category="hamburguesas">
+                <div class="portfolio-img">🍔</div>
+                <div class="portfolio-content">
+                    <h3>Hamburguesa Clásica</h3>
+                    <p>Carne 100% de res, queso cheddar, lechuga, tomate y nuestra salsa especial.</p>
+                    <span class="portfolio-price">$85.00</span>
+                    <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                </div>
+            </div>
+
+            <!-- Hamburguesa 2 -->
+            <div class="portfolio-card" data-category="hamburguesas">
+                <div class="portfolio-img">🍔</div>
+                <div class="portfolio-content">
+                    <h3>Hamburguesa BBQ</h3>
+                    <p>Doble carne, bacon crujiente, cebolla caramelizada y salsa barbacoa.</p>
+                    <span class="portfolio-price">$120.00</span>
+                    <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                </div>
+            </div>
+
+            <!-- Burrito 1 -->
+            <div class="portfolio-card" data-category="burritos">
+                <div class="portfolio-img">🌯</div>
+                <div class="portfolio-content">
+                    <h3>Burrito Mexicano</h3>
+                    <p>Pollo o res, frijoles, arroz, pico de gallo y guacamole fresco.</p>
+                    <span class="portfolio-price">$75.00</span>
+                    <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                </div>
+            </div>
+
+            <!-- Burrito 2 -->
+            <div class="portfolio-card" data-category="burritos">
+                <div class="portfolio-img">🌯</div>
+                <div class="portfolio-content">
+                    <h3>Burrito Supreme</h3>
+                    <p>Carne mixta, queso fundido, vegetales frescos y crema agria.</p>
+                    <span class="portfolio-price">$95.00</span>
+                    <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                </div>
+            </div>
+
+            <!-- Postre 1 -->
+            <div class="portfolio-card" data-category="postres">
+                <div class="portfolio-img">🍰</div>
+                <div class="portfolio-content">
+                    <h3>Pastel de Chocolate</h3>
+                    <p>Delicioso pastel de chocolate belga con cobertura de ganache.</p>
+                    <span class="portfolio-price">$45.00</span>
+                    <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                </div>
+            </div>
+
+            <!-- Bebida 1 -->
+            <div class="portfolio-card" data-category="bebidas">
+                <div class="portfolio-img">🥤</div>
+                <div class="portfolio-content">
+                    <h3>Limonada Natural</h3>
+                    <p>Limonada fresca con hierbabuena y un toque de jengibre.</p>
+                    <span class="portfolio-price">$25.00</span>
+                    <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                </div>
+            </div>
+
+            <!-- Hamburguesa 3 -->
+            <div class="portfolio-card" data-category="hamburguesas">
+                <div class="portfolio-img">🍔</div>
+                <div class="portfolio-content">
+                    <h3>Hamburguesa Vegana</h3>
+                    <p>Hamburguesa de lentejas y vegetales, con mayonesa vegana.</p>
+                    <span class="portfolio-price">$90.00</span>
+                    <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                </div>
+            </div>
+
+            <!-- Postre 2 -->
+            <div class="portfolio-card" data-category="postres">
+                <div class="portfolio-img">🍮</div>
+                <div class="portfolio-content">
+                    <h3>Flan Napolitano</h3>
+                    <p>Clásico flan con caramelo y un toque de vainilla.</p>
+                    <span class="portfolio-price">$35.00</span>
+                    <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filtrado de categorías
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const portfolioCards = document.querySelectorAll('.portfolio-card');
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remover clase active de todos los botones
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // Agregar clase active al botón clickeado
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Filtrar tarjetas
+                    portfolioCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+    // Cargar productos desde el sistema de administración
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedProducts = JSON.parse(localStorage.getItem('restaurantProducts'));
+        
+        if (savedProducts && savedProducts.length > 0) {
+            const portfolioGrid = document.querySelector('.portfolio-grid');
+            portfolioGrid.innerHTML = ''; // Limpiar productos de ejemplo
+            
+            savedProducts.forEach(product => {
+                if (product.status === 'active') {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'portfolio-card';
+                    productCard.setAttribute('data-category', product.category);
+                    
+                    productCard.innerHTML = `
+                        <div class="portfolio-img">${product.image}</div>
+                        <div class="portfolio-content">
+                            <h3>${product.name}</h3>
+                            <p>${product.description}</p>
+                            <span class="portfolio-price">$${product.price}</span>
+                            <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                        </div>
+                    `;
+                    
+                    portfolioGrid.appendChild(productCard);
+                }
+            });
+        }
+    });
+</script>
+<script>
+    // Cargar productos desde la base de datos
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            console.log('🔄 Cargando productos desde la base de datos...');
+            const response = await fetch('/api/products');
+            const products = await response.json();
+            
+            const portfolioGrid = document.querySelector('.portfolio-grid');
+            
+            if (products && products.length > 0) {
+                portfolioGrid.innerHTML = '';
+                
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'portfolio-card';
+                    productCard.setAttribute('data-category', product.category);
+                    
+                    // Usar emoji según la categoría
+                    let emoji = '🍔';
+                    if (product.category === 'burritos') emoji = '🌯';
+                    if (product.category === 'postres') emoji = '🍰';
+                    if (product.category === 'bebidas') emoji = '🥤';
+                    
+                    productCard.innerHTML = `
+                        <div class="portfolio-img">${emoji}</div>
+                        <div class="portfolio-content">
+                            <h3>${product.name}</h3>
+                            <p>${product.description}</p>
+                            <span class="portfolio-price">$${product.price}</span>
+                            <a href="contacto.html" class="btn-1" style="padding: 10px 25px;">Ordenar</a>
+                        </div>
+                    `;
+                    
+                    portfolioGrid.appendChild(productCard);
+                });
+                
+                console.log(`✅ ${products.length} productos cargados en el portafolio`);
+            } else {
+                console.log('ℹ️ No hay productos en la base de datos');
+            }
+        } catch (error) {
+            console.error('❌ Error cargando productos:', error);
+        }
+    });
+</script>
+</body>
+</html>

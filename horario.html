@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario y Ubicación - Restaurante Delicias</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .schedule-container {
+            padding: 100px 0;
+            color: white;
+        }
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        .schedule-card {
+            background: #0d0d0d;
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #333;
+        }
+        .schedule-card h2 {
+            color: #db241b;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .time-slots {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .time-slot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 8px;
+        }
+        .day {
+            font-weight: bold;
+            color: white;
+        }
+        .hours {
+            color: #db241b;
+            font-weight: bold;
+        }
+        .map-container {
+            margin-top: 50px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #333;
+        }
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .info-box {
+            background: #0d0d0d;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        .info-box h3 {
+            color: #db241b;
+            margin-bottom: 15px;
+        }
+        .info-box p {
+            color: #A7A7A7;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="schedule-container container">
+        <h1 style="text-align: center; font-size: 50px; margin-bottom: 20px;">Horario y Ubicación</h1>
+        <p style="text-align: center; color: #A7A7A7; font-size: 18px; margin-bottom: 50px;">
+            Visítanos y disfruta de la mejor experiencia gastronómica
+        </p>
+
+        <div class="schedule-grid">
+            <!-- Horario Normal -->
+            <div class="schedule-card">
+                <h2>🕒 Horario Regular</h2>
+                <div class="time-slots">
+                    <div class="time-slot">
+                        <span class="day">Lunes - Jueves</span>
+                        <span class="hours">9:00 AM - 10:00 PM</span>
+                    </div>
+                    <div class="time-slot">
+                        <span class="day">Viernes</span>
+                        <span class="hours">9:00 AM - 11:00 PM</span>
+                    </div>
+                    <div class="time-slot">
+                        <span class="day">Sábado</span>
+                        <span class="hours">10:00 AM - 11:00 PM</span>
+                    </div>
+                    <div class="time-slot">
+                        <span class="day">Domingo</span>
+                        <span class="hours">10:00 AM - 9:00 PM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horario Especial -->
+            <div class="schedule-card">
+                <h2>🎉 Horarios Especiales</h2>
+                <div class="time-slots">
+                    <div class="time-slot">
+                        <span class="day">Desayunos</span>
+                        <span class="hours">9:00 AM - 12:00 PM</span>
+                    </div>
+                    <div class="time-slot">
+                        <span class="day">Comida</span>
+                        <span class="hours">1:00 PM - 5:00 PM</span>
+                    </div>
+                    <div class="time-slot">
+                        <span class="day">Cena</span>
+                        <span class="hours">6:00 PM - Cierre</span>
+                    </div>
+                    <div class="time-slot">
+                        <span class="day">Días Festivos</span>
+                        <span class="hours">11:00 AM - 8:00 PM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información de Contacto -->
+        <div class="contact-info">
+            <div class="info-box">
+                <h3>📍 Dirección</h3>
+                <p><strong>Av. Principal #123</strong></p>
+                <p>Colonia Centro</p>
+                <p>Ciudad de México, CDMX</p>
+                <p>C.P. 12345</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📞 Teléfonos</h3>
+                <p><strong>Reservaciones:</strong> 55-1234-5678</p>
+                <p><strong>Delivery:</strong> 55-8765-4321</p>
+                <p><strong>WhatsApp:</strong> 55-9999-8888</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📧 Email</h3>
+                <p><strong>Info:</strong> info@restaurantedelicias.com</p>
+                <p><strong>Reservas:</strong> reservas@restaurantedelicias.com</p>
+                <p><strong>Eventos:</strong> eventos@restaurantedelicias.com</p>
+            </div>
+
+            <div class="info-box">
+                <h3>🚗 Estacionamiento</h3>
+                <p><strong>Valet parking:</strong> Disponible</p>
+                <p><strong>Estacionamiento:</strong> Gratuito 2 horas</p>
+                <p><strong>Acceso:</strong> Para discapacitados</p>
+            </div>
+        </div>
+
+        <!-- Mapa -->
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.888853045908!2d-99.1679499250181!3d19.427202537122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff35f5bd1563%3A0x6c366f0e2de02ff7!2sEl%20%C3%81ngel%20de%20la%20Independencia!5e0!3m2!1ses-419!2smx!4v1702425521234!5m2!1ses-419!2smx" 
+                width="100%" 
+                height="400" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+        <!-- Instrucciones -->
+        <div style="margin-top: 50px; text-align: center; color: #A7A7A7;">
+            <h3 style="color: white; margin-bottom: 20px;">¿Cómo llegar?</h3>
+            <p>📱 <strong>Metro:</strong> Estación Insurgentes (Línea 1) - 5 min caminando</p>
+            <p>🚍 <strong>Metrobús:</strong> Estación Reforma - 3 min caminando</p>
+            <p>🚗 <strong>Auto:</strong> Estacionamiento gratuito para clientes</p>
+        </div>
+    </div>
+</body>
+</html>

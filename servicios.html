@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Restaurante Delicias</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .services-container {
+            padding: 100px 0;
+            color: white;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .service-card {
+            background: #0d0d0d;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #db241b;
+        }
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            color: #db241b;
+            margin-bottom: 15px;
+        }
+        .service-card p {
+            color: #A7A7A7;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="services-container container">
+        <h1 style="text-align: center; font-size: 50px; margin-bottom: 20px;">Nuestros Servicios</h1>
+        <p style="text-align: center; color: #A7A7A7; font-size: 18px; margin-bottom: 50px;">
+            Descubre todo lo que tenemos para ofrecerte
+        </p>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🍽️</div>
+                <h3>Comida para Llevar</h3>
+                <p>Disfruta de nuestros platillos en la comodidad de tu hogar. Pedidos por teléfono o WhatsApp.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🎉</div>
+                <h3>Catering para Eventos</h3>
+                <p>Hacemos tu evento especial. Bodas, cumpleaños, reuniones empresariales. Cotiza sin compromiso.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">👥</div>
+                <h3>Reservas para Grupos</h3>
+                <p>¿Eres un grupo grande? Reserva con anticipación y te garantizamos el mejor servicio.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🚚</div>
+                <h3>Delivery Express</h3>
+                <p>Entrega rápida en 30 minutos o menos. Zonas cubiertas: Centro, Norte y Sur de la ciudad.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🍳</div>
+                <h3>Chef a Domicilio</h3>
+                <p>Llevamos la experiencia gourmet a tu casa. Menús personalizados para ocasiones especiales.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🎁</div>
+                <h3>Regalos Gastronómicos</h3>
+                <p>¿Buscas un regalo especial? Tenemos certificados de regalo y experiencias culinarias únicas.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="contacto.html" class="btn-1">Solicitar Información</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Restaurante Delicias</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-container {
+            padding: 100px 0;
+            color: white;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 50px;
+        }
+        .contact-form {
+            background: #0d0d0d;
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-input:focus {
+            border-color: #db241b;
+            outline: none;
+        }
+        .contact-info {
+            padding: 20px;
+        }
+        .info-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #0d0d0d;
+            border-radius: 10px;
+        }
+        .info-item h3 {
+            color: #db241b;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container container">
+        <h1 style="text-align: center; font-size: 50px; margin-bottom: 20px;">Contáctanos</h1>
+        <p style="text-align: center; color: #A7A7A7; font-size: 18px; margin-bottom: 50px;">
+            ¿Tienes alguna pregunta? Nos encantaría escucharte
+        </p>
+
+        <div class="contact-grid">
+            <!-- Formulario de Contacto -->
+            <div class="contact-form">
+                <h2 style="color: white; margin-bottom: 30px;">Envía un Mensaje</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Tu nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" placeholder="Tu email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-input" placeholder="Tu teléfono">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-input" required>
+                            <option value="">Motivo de contacto</option>
+                            <option value="reserva">Reserva</option>
+                            <option value="informacion">Información</option>
+                            <option value="queja">Queja o Sugerencia</option>
+                            <option value="trabajo">Trabajar con nosotros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-input" placeholder="Tu mensaje" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-1" style="width: 100%; text-align: center;">
+                        Enviar Mensaje
+                    </button>
+                </form>
+            </div>
+
+            <!-- Información de Contacto -->
+            <div class="contact-info">
+                <div class="info-item">
+                    <h3>📞 Teléfonos</h3>
+                    <p>Principal: <strong>555-1234</strong></p>
+                    <p>Reservas: <strong>555-5678</strong></p>
+                    <p>WhatsApp: <strong>555-9012</strong></p>
+                </div>
+
+                <div class="info-item">
+                    <h3>📍 Dirección</h3>
+                    <p><strong>1234 Calle Falsa</strong></p>
+                    <p>Colonia Centro, Ciudad</p>
+                    <p>C.P. 12345</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>🕒 Horario</h3>
+                    <p><strong>Lunes a Viernes:</strong> 9:00 AM - 10:00 PM</p>
+                    <p><strong>Sábados y Domingos:</strong> 10:00 AM - 11:00 PM</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>📧 Email</h3>
+                    <p>Reservas: <strong>reservas@restaurante.com</strong></p>
+                    <p>General: <strong>info@restaurante.com</strong></p>
+                    <p>Trabajo: <strong>rrhh@restaurante.com</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script simple para el formulario
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Mensaje enviado! Te contactaremos pronto.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
